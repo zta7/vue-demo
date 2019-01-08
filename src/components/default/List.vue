@@ -4,7 +4,7 @@
     <table cellspacing="0">
       <thead>
         <th>
-          <input type="checkbox" @click="toggle" :checked="selectAll"/>
+          <input type="checkbox" @click="toggle" :checked=" isSelectedAll "/>
         </th>
         <th v-for="col in cols" :key="col" @click="colClick(col)" :class="{colSelected: col===selectedCol.colName}">      
             <i class="iconfont icon-up"   v-show="selectedCol.colName!=col || selectedCol.order!='desc'"></i>
@@ -14,12 +14,12 @@
         <th></th>
       </thead>
       <tbody>
-        <tr v-for="obj in objs" :key="obj[keyCol]">
-          <td><input type="checkbox" v-model="selectedId" :value="obj[keyCol]"/></td>
+        <tr v-for="(obj,index) in objs" :key="obj[keyCol]">
+          <td><input type="checkbox" v-model='selectedId' :value="index"/></td>
           <td v-for="(col,index) in cols" :key="index">
             {{ obj[col] }}
           </td>
-          <td>
+          <td>  
             <router-link :to="{ name: 'users', params: { id: obj[keyCol] }}">View</router-link>
             <a href="#">Edit</a>
             <a href="#">Delete</a>
@@ -45,8 +45,7 @@ export default {
     return {
       
       selectedCol: { "colName":"","order":"asce" },
-      selectedId: [],
-      selectAll: false,
+      selectedId: []
 
     }
   },
@@ -56,20 +55,18 @@ export default {
       this.selectedCol.colName = order[0]
       this.selectedCol.order   = order[1]
     }
-
   },
-
   methods: { 
     toggle: function () { 
-      if (!this.selectAll) { 
-        this.selectAll = true;
+      if (!this.isSelectedAll) { 
         this.selectedId = [];
-        this.objs.forEach(e => {
-          this.selectedId.push(e.id)
+        this.objs.forEach((e,i) => {
+          this.selectedId.push(
+            i 
+          )
         });
-     }
+      }
       else{ 
-        this.selectAll = false;
         this.selectedId = [];
       }         
     },
@@ -90,6 +87,10 @@ export default {
         order: order 
       }})
     }
+  },
+  computed:{
+    isSelectedAll: function () { return this.objs.length === this.selectedId.length },
+
   },
   watch: {
     '$route.query.order': function () { 

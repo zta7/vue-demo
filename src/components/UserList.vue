@@ -48,6 +48,8 @@ export default {
         this.keyCol = data.keyCol,
         this.nums = data.users.length,
         this.defaultNums = data.defaultNums
+        // console.log(this.$data)
+        // console.log(data)
     },
     
     initData: function () { 
@@ -60,6 +62,7 @@ export default {
       this.$http
         .get(url)
         .then(response => (
+            console.log(response),
             this.setData(response.data),
             this.ajaxed = true
       ))

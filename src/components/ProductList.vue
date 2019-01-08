@@ -2,7 +2,7 @@
   <div>
     <table-bar v-if="ajaxed"/>
     <list :objs="objs" :cols="cols" :keyCol="keyCol" v-if="ajaxed" @transferObjs="transferObjs($event)"/>
-    <bar  :defaultNums="defaultNums" :nums="nums" :bars="bars" v-if="ajaxed" @transferObjs="transferObjs($event)"/>
+    <bar  :defaultNums="defaultNums" :nums="nums" :bars="bars" v-if="ajaxed" @transferObjs="transferObjs($event)"/>    
   </div>
 </template>
 <script>
@@ -13,6 +13,8 @@ export default {
   name: "productList",
   created: function () { 
     this.initData()
+    console.log(this.$route.matched);
+    
   },
   data: function () { 
     return { 
@@ -22,7 +24,7 @@ export default {
       nums: Number,
       bars: Number,
       // List组件
-      objs: [],
+      objs: [], 
       cols: [],
       keyCol: String
     }

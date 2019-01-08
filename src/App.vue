@@ -1,27 +1,12 @@
 <template>
-  <div id="app" @click="click($event)">
+  <div id="app">
     <router-view></router-view>
   </div>
 </template>
-
 <script>
-import   UserList      from    './components/UserList.vue'
-import   ProductList   from    './components/ProductList.vue'
 
 export default {
   name: 'app',
-  components: {
-    UserList,
-    ProductList
-  },
-  methods: {
-    click : function(e){
-      // console.log(e.target.classList)
-      if( this.$store.state.flag === true){
-        this.$store.commit('toggle')
-      }
-    }
-  },
 }
 </script>
 
